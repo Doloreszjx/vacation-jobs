@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学校轮播图</title>
+	<style type="text/css">
+	* {
+            margin:0;
+            padding:0;
+        }
+        a{
+            text-decoration: none;
+        }
+		.container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin:100px auto 0 auto;
+            box-shadow: 0 0 5px pink;
+            overflow: hidden;
+        }       
+        .wrap {
+            position: absolute;
+            width: 4200px;
+            height: 400px;
+            z-index: 1;
+        }
+          .container .wrap img {
+            float: left;
+            width: 600px;
+            height: 400px;
+        }
+        .container .arrow {
+          position: absolute;
+            top: 35%;
+            color: green;
+            padding:0px 14px;
+            border-radius: 50%;
+            font-size: 50px;
+            z-index: 2;
+            display: none;
+        }
+	</style>
+	
+</head>
+<body>
+	<div class="container">
+		<div class="wrap" style="left:-600px;">
+			<!--设置-600px是为了让第一张图片显示出来-->
+			<img src="./image/5.png" alt="5">
+			<img src="./image/1.png" alt="1">
+			<img src="./image/2.png" alt="2">
+			<img src="./image/3.png" alt="3">
+			<img src="./image/4.png" alt="4">
+			<img src="./image/5.png" alt="5">
+			<img src="./image/1.png" alt="1">
+		</div>
+		<a href="javascript:;" class="arrow arrow_left">&lt;</a>
+        <a href="javascript:;" class="arrow arrow_right">&lt;</a>
+	</div>
+    <script type="text/javascript">
+	    var wrap = document.querySelector(".wrap");
+        var next = document.querySelector(".arrow_right");
+        var prev = document.querySelector(".arrow_left");
+        next.onclick = function () {
+            next_pic();
+        }
+        prev.onclick = function () {
+            prev_pic();
+        }
+        function next_pic () {
+            var newLeft;
+            if(wrap.style.left === "-3600px"){
+                newLeft = -1200;
+                // 如果变成-3600，再按那就变成1200
+            }else{
+                newLeft = parseInt(wrap.style.left)-600;
+            }
+            wrap.style.left = newLeft + "px";
+        }
+        function prev_pic () {
+            var newLeft;
+            if(wrap.style.left === "0px"){
+                newLeft = -2400;
+            }else{
+                newLeft = parseInt(wrap.style.left)+600;
+            }
+            wrap.style.left = newLeft + "px";
+        }
+        var timer = null;
+        function autoPlay () {
+            timer = setInterval(function () {
+                next_pic();
+            },2000);
+        }
+        autoPlay();
+        // 设置自动播放的时间
+</script>
+
+</body>
+</html>
