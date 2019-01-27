@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>two</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">hello</div>
+    
+
+
+    <script>
+        //生命周期函数即使是Vue实例在某个时间点自动执行的函数
+        var vm = new Vue({
+            el:'#app',
+            beforeCreate: function(){
+                console.log(999);
+            },
+            created: function(){
+                console.log(00000);
+            },
+            beforeMount: function(){
+                console.log(8);
+            },
+            mounted: function(){
+                console.log(7);
+            }
+        })
+    
+    </script>
+
+</body>
+</html>

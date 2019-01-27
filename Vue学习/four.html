@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>four</title>
+    <script src="./vue.js"></script>
+    <style>
+        .activated{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div :style="styleObj" @click="handleDivClick">
+            hello world</div>
+    </div>
+    
+
+
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                styleObj:{
+                    color: 'black'
+                }
+            },
+            methods: {
+                handleDivClick: function(){
+                    this.styleObj.color = this.styleObj.color === "black" ? "red" : "black"
+                }
+            }
+        })
+      
+    </script>
+
+</body>
+</html>
