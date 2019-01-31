@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中js动画</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+        <transition
+         name="fade"
+         @before-enter="handelBefore"
+         @enter="handelEnter"
+         @after-enter="handleEnter"
+         >
+            <div v-if="show">hello</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+
+
+
+    <script>
+
+
+        var vm = new Vue({
+            el:"#root",
+            data:{
+                show: true
+            },
+            methods:{
+                handleClick: function () { 
+                    this.show = !this.show;
+                 },
+                handelBefore: function (el) { 
+                     el.style.color = "red";
+                },
+                handelEnter: function (el,done) { 
+                    setTimeout(() => {
+                        el.style.color = "green";
+                    },2000)
+                    setTimeout(() => {
+                        done()
+                    },4000)
+                },
+                handleEnter: function (el) { 
+                    el.style.color = "#000";
+                 }
+            }
+        })
+    
+    </script>
+
+
+</body>
+</html>
