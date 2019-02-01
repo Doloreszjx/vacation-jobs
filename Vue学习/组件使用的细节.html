@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>four</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <counter ref="one" @change="handcange"></counter>
+        <counter ref="two" @change="handcange"></counter>
+        <div>{{total}}</div>
+    </div>
+    
+
+
+    <script>
+
+        Vue.component('counter',{
+            template:'<div @click="handle">{{number}}</div>',
+            data: function () {
+                return {
+                    number:0
+                }
+            },
+            methods:{
+                handle: function () {
+                    this.number++;
+                    this.$emit('change')
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el:"#root",
+            data:{
+                total:0
+            },
+            methods:{
+                handcange: function () {
+                    this.total = this.$refs.one.number + this.$refs.two.number; 
+                }
+            }
+        })
+      
+    </script>
+
+</body>
+</html>

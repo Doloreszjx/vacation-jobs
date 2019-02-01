@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件的传值</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+        <counter :count="3" @change="increase"></counter> 
+        <counter :count="2" @change="increase"></counter>
+        <div>{{total}}</div>
+    </div>
+
+
+
+    <script>
+
+
+        var counter = {
+            template: "<div @click='handle'>{{number}}</div>",
+            props:['count'],
+            
+            data: function () {
+                //因为Vue单向传递，子组件无法更改父组件的数据，因此需要进行克隆
+                return {
+                    number: this.count
+                }
+            },
+            methods:{
+                handle: function () {
+                    this.number = this.number + 2;
+                    //change监听，给父组件传值
+                    this.$emit('change',2);
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el:"#root",
+            components:{
+                counter:counter
+            },
+            data:{
+                total:5
+            },
+            methods:{
+                increase: function (step) {
+                    this.total+=step;
+                }
+            }
+        })
+    
+    </script>
+
+
+</body>
+</html>
