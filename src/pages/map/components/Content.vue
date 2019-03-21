@@ -60,7 +60,7 @@ export default {
         }
       }]
     }
-  },
+  },//kkk
   methods () {
     req_post() {
       const that=this;
