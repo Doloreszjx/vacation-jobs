@@ -8,11 +8,7 @@
     </div>
     <div class="list">
       <p class="text">详情</p>
-       <ul>
-         <li><i class="iconfont w-icon">&#xe6b4;</i><span>追踪</span></li>
-         <li><i class="iconfont w-icon">&#xe61d;</i><span>轨迹图</span></li>
-       </ul>
-       <ul>
+      <ul>
          <li><i class="iconfont w-icon">&#xe698;</i><span>健康</span></li>
          <li><i class="iconfont w-icon">&#xe661;</i><span>报警</span></li>
        </ul>
@@ -27,19 +23,19 @@ export default {
   data () {
     return {
       NumList: [{
-        id: '001',
+        id: '0001',
         num: '000001'
       }, {
-        id: '002',
+        id: '0002',
         num: '000002'
       }, {
-        id: '003',
+        id: '0003',
         num: '000003'
       }, {
-        id: '004',
+        id: '0004',
         num: '000004'
       }, {
-        id: '005',
+        id: '0005',
         num: '000005'
       }]
     }
@@ -76,7 +72,7 @@ export default {
         font-size: .4rem
         padding-top : .45rem
         padding-left : .2rem
-        margin-bottom :.1rem
+        margin-bottom :.25rem
        ul
         list-style-type :none
         overflow :hidden

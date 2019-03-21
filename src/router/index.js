@@ -5,6 +5,9 @@ import Map from '@/pages/map/Map'
 import Card from '@/pages/card/Card'
 import About from '@/pages/about/About'
 import Self from '@/pages/self/Self'
+import Register from '@/pages/register'
+import Login from '@/pages/login'
+import Exit from '@/pages/exit'
 Vue.use(Router)
 
 export default new Router({
@@ -32,5 +35,17 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
+    }, {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    }, {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    }, {
+      path: '/exit',
+      name: 'Exit',
+      component: Exit
     }]
 })

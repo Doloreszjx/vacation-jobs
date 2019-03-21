@@ -22,7 +22,7 @@
         </div>
       </form>
       <div class="icon">
-      <button class="button" >提交</button>
+        <el-button type="text" @click="open" class="button">提交</el-button>
       </div>
     </div>
   </div>
@@ -32,6 +32,19 @@
 <script>
 export default {
   name: 'HomeQuestionnaire',
+  methods: {
+    open () {
+      this.$alert('我们会及时解决您所遇到的问题', '提交成功！', {
+        confirmButtonText: '确定',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `action: $ { action } `
+          })
+        }
+      })
+    }
+  },
   props: {
     list: Array
   }

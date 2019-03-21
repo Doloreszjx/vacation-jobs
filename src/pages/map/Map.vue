@@ -1,21 +1,25 @@
 <template>
   <div>
+    <map-com></map-com>
    <map-header></map-header>
+    <map-searchbar></map-searchbar>
    <map-content></map-content>
-   <map-animals></map-animals>
   </div>
 </template>
 
 <script>
+import MapCom from './components/Com'
 import MapHeader from './components/Header'
+import MapSearchbar from './components/Searchbar'
 import MapContent from './components/Content'
-import MapAnimals from './components/Animals'
+
 export default {
   name: 'Map',
   components: {
+    MapCom,
     MapHeader,
-    MapContent,
-    MapAnimals
+    MapSearchbar,
+    MapContent
   }
 }
 </script>

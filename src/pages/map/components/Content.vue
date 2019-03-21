@@ -1,72 +1,90 @@
 <template>
   <div class="amap-page-container">
-    <el-amap
-      vid="amapDemo"
-      :center="center"
-      :zoom="zoom"
-      class="amap-demo">
-      <el-amap-marker v-for="marker in markers" :position="marker.position" :events="marker.events" :key="marker.id"></el-amap-marker>
-      <el-amap-info-window v-if="window" :position="window.position" :visible="window.visible" :content="window.content"></el-amap-info-window>
-    </el-amap>
+    <div :style="{width:'100%',height:'300px'}">
+      <el-amap vid="amap" :plugin="plugin" class="amap-demo" :center="center">
+      </el-amap>
+    </div>
+
+
+    <div class="toolbar">
+        <span v-if="loaded">
+          location: lng = {{ lng }} lat = {{ lat }}
+        </span>
+      <span v-else>正在定位</span>
+    </div>
+    <div
+      v-on:click="req_post()"
+    >
+      查询周边
+    </div>
   </div>
 </template>
+
 <script>
-module.exports = {
+export default {
   name: 'MapContent',
-  data: function () {
+  data () {
+    const self = this
     return {
-      zoom: 16,
       center: [121.59996, 31.197646],
-      markers: [],
-      windows: [],
-      window: ''
-    }
-  },
-
-  mounted () {
-    let markers = []
-    let windows = []
-
-    let num = 10
-    let self = this
-
-    for (let i = 0; i < num; i++) {
-      markers.push({
-        id: '0001+i',
-        position: [121.59996, 31.197646 + i * 0.001],
+      lng: 0,
+      lat: 0,
+      loaded: false,
+      plugin: [{
+        enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+        timeout: 100, // 超过10秒后停止定位，默认：无穷大
+        maximumAge: 0, // 定位结果缓存0毫秒，默认：0
+        convert: true, // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+        showButton: true, // 显示定位按钮，默认：true
+        buttonPosition: 'RB', // 定位按钮停靠位置，默认：'LB'，左下角
+        showMarker: true, // 定位成功后在定位到的位置显示点标记，默认：true
+        showCircle: true, // 定位成功后用圆圈表示定位精度范围，默认：true
+        panToLocation: true, // 定位成功后将定位到的位置作为地图中心点，默认：true
+        zoomToAccuracy: true, // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：f
+        extensions: 'all',
+        pName: 'Geolocation',
         events: {
-          click () {
-            self.windows.forEach(window => {
-              window.visible = false
-            })
-
-            self.window = self.windows[i]
-            self.$nextTick(() => {
-              self.window.visible = true
+          init (o) {
+            // o 是高德地图定位插件实例
+            o.getCurrentPosition((status, result) => {
+              console.log(result)
+              if (result && result.position) {
+                self.lng = result.position.lng
+                self.lat = result.position.lat
+                self.center = [self.lng, self.lat]
+                self.loaded = true
+                self.$nextTick()
+              }
             })
           }
         }
-      })
-
-      windows.push({
-        id: '0001+i',
-        position: [121.59996, 31.197646 + i * 0.001],
-        content: `<div class="prompt">$ { i }</div>`,
-        visible: false
-      })
+      }]
     }
+  },
+  methods () {
+    req_post() {
+      const that=this;
+      const registerUrl="http://restapi.amap.com/v3/batch?key=47eaf6873b8ef6a7679a0c9e7640efb3";
+      const newUserInfo={
+        "ops": [
+          {
+            "url": "/v3/place/around?offset=10&page=1&key=47eaf6873b8ef6a7679a0c9e7640efb3="+that.lng+","+that.lat+"&output=json&radius=100000&types=080000"
+          }
+        ]
+      };
+      that.axios.post(registerUrl, newUserInfo, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(function (response) {
+          console.log(response['data'][0]['body']['pois'])
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
-    this.markers = markers
-    this.windows = windows
+    }
   }
 }
 </script>
-<style lang="stylus" scoped>
-  .amap-demo
-    height: 300px
-  .prompt
-    background: white
-    width: 100px
-    height: 30px
-    text-align: center
-</style>
