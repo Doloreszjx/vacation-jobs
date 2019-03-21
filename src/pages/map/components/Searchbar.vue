@@ -12,7 +12,9 @@
       />
     </el-col>
     <el-col :span="2">
-      <button class="el-button el-button--primary"><i class="el-icon-search"></i></button>
+      <button class="el-button el-button--primary"
+              v-on:click="req_post()">
+        <i class="el-icon-search"></i></button>
     </el-col>
   </el-row>
 </div>
@@ -53,6 +55,28 @@ export default {
     }, 200),
     handleSelect: function (item) {
       console.log(item.value)
+    },
+    req_post () {
+      const that = this
+      const registerUrl = 'http://restapi.amap.com/v3/batch?key=47eaf6873b8ef6a7679a0c9e7640efb3'
+      const newUserInfo = {
+        'ops': [
+          {
+            'url': '/v3/place/around?offset=10&page=1&key=47eaf6873b8ef6a7679a0c9e7640efb3="+that.lng+","+that.lat+"&output=json&radius=100000&types=080000'
+          }
+        ]
+      }
+      that.axios.post(registerUrl, newUserInfo, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(function (response) {
+          console.log(response['data'][0]['body']['pois'])
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

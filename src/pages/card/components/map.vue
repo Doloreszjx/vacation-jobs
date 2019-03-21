@@ -1,81 +1,80 @@
 <template>
   <div class="amap-page-container">
-    <el-amap vid="amapDemo"  :center="center" :amap-manager="amapManager" :zoom="zoom" :events="events" class="amap-demo">
-    </el-amap>
-
-    <div class="toolbar" @click="switchWindow">
+    <el-amap vid="amap" :zoom="zoom" :center="center" class="amap-demo">
       <el-amap-info-window
-        :content="currentWindow.centent"
-        :visible="currentWindow.visible">
+        :position="currentWindow.position"
+        :content="currentWindow.content"
+        :visible="currentWindow.visible"
+        :events="currentWindow.events">
       </el-amap-info-window>
-    </div>
+    </el-amap>
+    <el-button round  @click="switchWindow(0)">1号</el-button>
+    <el-button round @click="switchWindow(1)">2号</el-button>
+    <!--<button @click="switchWindow(0)">Show First Window</button>-->
+    <!--<button @click="switchWindow(1)">Show Second Window</button>-->
   </div>
 </template>
+
+<style>
+  .amap-demo {
+    height: 300px;
+  }
+</style>
+
 <script>
-import VueAMap from 'vue-amap'
-
-let amapManager = new VueAMap.AMapManager()
-let AMap
-export default {
-  name: 'map',
-
-  data: function () {
+module.exports = {
+  data () {
     return {
-      zoom: 12,
-      center: [121.59996, 31.197646],
-      amapManager,
-      events: {
-        init (o) { // 高德地图插件实例
-          let marker = new AMap.Marker({
-            position: [121.59996, 31.197646]
-          })
-
-          marker.setMap(o)
-        }
-      },
+      zoom: 14,
+      center: [121.5273285, 31.21515044],
       windows: [
         {
-          position: this.position,
-          content: `<div>体温：38度</div>`,
-          visible: true
+          position: [121.5273285, 31.21515044],
+          content: `id:0001
+                    体温：37°
+                    健康`,
+          visible: true,
+          events: {
+            close () {
+              console.log('close infowindow1')
+            }
+          }
+        }, {
+          position: [121.5375285, 31.21515044],
+          content: `id:0002
+                    体温：39°
+                    健康`,
+          visible: true,
+          events: {
+            close () {
+              console.log('close infowindow2')
+            }
+          }
         }
       ],
       slotWindow: {
-        position: this.position
+        position: [121.5163285, 31.21515044]
       },
       currentWindow: {
         position: [0, 0],
-        centent: '',
+        content: '',
+        events: {},
         visible: false
       }
     }
   },
-  mounted () {
-    this.currentWindow = this.windows
-  },
-  methods: {
-    add () {
-      let o = amapManager.getMap()
-      let marker = new AMap.Marker({
-        position: [121.59996, 31.177646]
-      })
 
-      marker.setMap(o)
-    },
-    switchWindow () {
+  mounted () {
+    this.currentWindow = this.windows[0]
+  },
+
+  methods: {
+    switchWindow (tab) {
       this.currentWindow.visible = false
       this.$nextTick(() => {
-        this.currentWindow = this.windows
+        this.currentWindow = this.windows[tab]
         this.currentWindow.visible = true
       })
-    }
-  }
+    }}
 }
 </script>
-<style scoped>
-  .amap-demo{
-    width: 200px;
-    height: 200px;
-    margin-top: 48px;
-  }
-</style>
