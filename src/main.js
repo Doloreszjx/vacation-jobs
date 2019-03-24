@@ -24,7 +24,7 @@ Vue.use(ElementUI)
 
 AMap.initAMapApiLoader({
   key: '47eaf6873b8ef6a7679a0c9e7640efb3',
-  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PlaceSearch', 'AMap.Geolocation', 'Geocoder'],
+  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PlaceSearch', 'AMap.Geolocation', 'AMap.Geocoder', 'PathSimplifier'],
   uiVersion: '1.0.11' // 版本号
 })
 

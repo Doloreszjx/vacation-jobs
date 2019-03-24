@@ -1,80 +1,81 @@
 <template>
-  <div class="amap-page-container">
-    <el-amap vid="amap" :zoom="zoom" :center="center" class="amap-demo">
-      <el-amap-info-window
-        :position="currentWindow.position"
-        :content="currentWindow.content"
-        :visible="currentWindow.visible"
-        :events="currentWindow.events">
-      </el-amap-info-window>
-    </el-amap>
-    <el-button round  @click="switchWindow(0)">1号</el-button>
-    <el-button round @click="switchWindow(1)">2号</el-button>
-    <!--<button @click="switchWindow(0)">Show First Window</button>-->
-    <!--<button @click="switchWindow(1)">Show Second Window</button>-->
+  <div class="map-root">
+    <div id="map-container" class="map-container"></div>
   </div>
 </template>
 
-<style>
-  .amap-demo {
-    height: 300px;
-  }
-</style>
+<script type="text/ecmascript-6">
+import AMap from 'AMap'
+import AMapUI from 'AMapUI'
 
-<script>
-module.exports = {
-  data () {
-    return {
-      zoom: 14,
-      center: [121.5273285, 31.21515044],
-      windows: [
-        {
-          position: [121.5273285, 31.21515044],
-          content: `id:0001
-                    体温：37°
-                    健康`,
-          visible: true,
-          events: {
-            close () {
-              console.log('close infowindow1')
-            }
-          }
-        }, {
-          position: [121.5375285, 31.21515044],
-          content: `id:0002
-                    体温：39°
-                    健康`,
-          visible: true,
-          events: {
-            close () {
-              console.log('close infowindow2')
-            }
-          }
-        }
-      ],
-      slotWindow: {
-        position: [121.5163285, 31.21515044]
-      },
-      currentWindow: {
-        position: [0, 0],
-        content: '',
-        events: {},
-        visible: false
-      }
-    }
-  },
-
+export default {
+  name: 'CardMap',
   mounted () {
-    this.currentWindow = this.windows[0]
+    this.initMap()
   },
-
   methods: {
-    switchWindow (tab) {
-      this.currentWindow.visible = false
-      this.$nextTick(() => {
-        this.currentWindow = this.windows[tab]
-        this.currentWindow.visible = true
+    initMap () {
+      // 创建地图
+      let googleLayerimage = new AMap.TileLayer({
+        getTileUrl: 'https://mt{1,2,3,0}.google.cn/maps/vt?lyrs=s@194&hl=zh-CN&gl=cn&x=[x]&y=[y]&z=[z]',
+        zIndex: 2
       })
-    }}
+
+      let googleLayervector = new AMap.TileLayer()
+
+      // let roadNet = new AMap.TileLayer.RoadNet()
+      let mapObj = new AMap.Map('map-container', {
+        layers: [googleLayervector, googleLayerimage],
+        center: [108.963148, 34.232709],
+        zoom: 11
+      })
+
+      // mapObj.on('click', (ev) => {
+      //   console.log(ev.lnglat)
+      // });
+
+      let marker = new AMap.Marker({
+        position: new AMap.LngLat(108.963148, 34.232709),
+        map: mapObj
+      })
+
+      AMap.event.addListener(marker, 'click', (e) => {
+        AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+          var infoWindow = new SimpleInfoWindow({
+            infoTitle: '<strong>1号</strong>',
+            infoBody: '<p>体温：正常</p>' + '<br/><p>血压：正常</p>' + '<br/>健康',
+            offset: new AMap.Pixel(0, -30),
+            autoMove: true
+          })
+          infoWindow.open(mapObj, e.target.getPosition())
+        })
+      })
+
+      AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
+        var infoWindow = new SimpleInfoWindow({
+          infoTitle: '<strong>1号</strong>',
+          infoBody: '<p>体温：正常</p>' + '<br/><p>血压：正常</p>' + '<br/>健康',
+          offset: new AMap.Pixel(0, -30),
+          autoMove: true
+        })
+        infoWindow.open(mapObj, new AMap.LngLat(108.963148, 34.232709))
+      })
+    }
+  }
 }
 </script>
+<style>
+  .amap-logo {
+    display: none !important;
+  }
+</style>
+<style scoped lang="stylus">
+  .map-root
+    float : left
+    width: 200px
+    height: 200px
+    margin-top : 50px
+    .map-container
+      width: 200px
+      height 200px
+</style>
