@@ -41,7 +41,7 @@ export default {
 
       AMap.event.addListener(marker, 'click', (e) => {
         AMapUI.loadUI(['overlay/SimpleInfoWindow'], function (SimpleInfoWindow) {
-          var infoWindow = new SimpleInfoWindow({
+          let infoWindow = new SimpleInfoWindow({
             infoTitle: '<strong>1号</strong>',
             infoBody: '<p>体温：正常</p>' + '<br/><p>血压：正常</p>' + '<br/>健康',
             offset: new AMap.Pixel(0, -30),

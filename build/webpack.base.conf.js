@@ -24,7 +24,9 @@ module.exports = {
   context: path.resolve(__dirname, '../'),
   externals: {
     'AMap': 'AMap',
-    'AMapUI': 'AMapUI'
+    'AMapUI': 'AMapUI',
+    'BMap': 'BMap',
+    "BMapLib": "BMapLib"
   },
   entry: {
     app: './src/main.js'
