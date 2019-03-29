@@ -1,7 +1,9 @@
 <template>
     <div class="box">
       <p class="title">重新定义畜牧养殖</p>
-      <p class="content">补充：我们的养殖理念</p>
+      <pre class="content">         在中国大力支持畜牧业发展的大环境下，公司以“养殖过程透明化，提供优质肉类食品”为理念，
+                           积极推广牲畜科学养殖的应用，提供更加健康优质的肉质产品，将公司理念诉诸产品研发，
+                           在科技创新中探索合作，在提升顾客价值中谋求发展。</pre>
     </div>
 </template>
 
@@ -21,12 +23,15 @@ export default {
     color: #fff
     .title
       margin :0
-      margin-left :30%
+      margin-left : 1rem
+      float : left
       margin-top :.8rem
-      font-size :1.2rem
+      font-size :1.0rem
       font-family : "Microsoft Sans Serif"
     .content
      margin-top :3.5rem
-     margin-left :-15rem
-     color :red
+     text-align : centent
+     font-size: 0.3rem
+     padding-top : 0.05rem
+     color :white
 </style>

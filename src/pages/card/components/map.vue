@@ -14,7 +14,7 @@ export default {
     this.initMap()
   },
   methods: {
-    initMap () {
+    initMap: function () {
       // 创建地图
       let googleLayerimage = new AMap.TileLayer({
         getTileUrl: 'https://mt{1,2,3,0}.google.cn/maps/vt?lyrs=s@194&hl=zh-CN&gl=cn&x=[x]&y=[y]&z=[z]',

@@ -1,5 +1,7 @@
 <template>
-    <div class="box">我们用到的工具</div>
+    <div class="box">
+      预留
+    </div>
 </template>
 
 <script>
