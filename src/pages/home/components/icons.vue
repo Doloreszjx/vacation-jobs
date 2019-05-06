@@ -30,7 +30,7 @@ export default {
     overflow : hidden
     height:0
     padding-bottom :36.5%
-    margin-top : 1.5rem
+    margin-top : 11.5rem
     border : .05rem dashed #ccc
     background :#f7f7f7
     .title

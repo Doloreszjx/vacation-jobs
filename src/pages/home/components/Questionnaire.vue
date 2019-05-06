@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <span class="title"><b>调查问卷</b></span>
+    <span class="title"><b>关于我们</b></span>
     <p class="introduction">我们一直致力于在中国大地推进智慧牧场的发展
                               <img src="http://image.zzd.sm.cn/16130109288507172989.jpg" class="pic-icon"/>
     </p>
